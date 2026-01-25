@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="400" prefWidth="600"
+            xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sn.javafx_diti4_2026.controllers.TypeAssuranceController"
+            style="-fx-font-family:'Comic Sans MS'; -fx-font-weight:bold; -fx-background-color:#FFC0CB;">
+
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets bottom="15" left="15" right="15" top="10"/>
+            </padding>
+
+            <Text text="Gestion des Types d'Assurance"
+                  style="-fx-fill:black;">
+                <font>
+                    <Font size="22"/>
+                </font>
+            </Text>
+
+            <HBox spacing="10">
+                <Label text="Label :" style="-fx-text-fill:black;"/>
+                <TextField fx:id="txtLabel" prefWidth="250"
+                           style="-fx-background-radius:10; -fx-text-fill:black;"/>
+            </HBox>
+
+            <TableView fx:id="tableTypeAssurance" prefHeight="220"
+                       style="-fx-background-color:#FFF0F5; -fx-background-radius:10;">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID"/>
+                    <TableColumn fx:id="colLabel" text="Label"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button text="Ajouter" onAction="#addType"
+                        style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-background-radius:20;"/>
+                <Button text="Modifier" onAction="#updateType"
+                        style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-background-radius:20;"/>
+                <Button text="Supprimer" onAction="#deleteType"
+                        style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-background-radius:20;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,63 @@
+/* Palette de couleurs pastel rose/lavande et styles généraux */
+
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-base: #f7f1f8; /* Lavande très clair pour le fond */
+    -fx-background-color: -fx-base;
+    -fx-text-fill: #3c3c3c;
+}
+
+/* Style des titres */
+.text {
+    -fx-font-size: 22px;
+    -fx-fill: #6a5acd; /* SlateBlue, un peu plus soutenu pour le contraste */
+}
+
+/* Style des labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #5a5a5a;
+}
+
+/* Style des boutons */
+.button {
+    -fx-background-color: #e1bee7; /* Lavande */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 15px; /* Bords arrondis */
+    -fx-padding: 5px 15px;
+}
+
+.button:hover {
+    -fx-background-color: #ce93d8; /* Lavande plus foncée au survol */
+}
+
+/* Style des champs de texte et ComboBox */
+.text-field, .combo-box {
+    -fx-background-radius: 15px;
+    -fx-border-color: #e1bee7;
+    -fx-border-radius: 15px;
+    -fx-font-size: 13px;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: -fx-base;
+    -fx-text-fill: #3c3c3c;
+}
+
+/* Style de la TableView */
+.table-view {
+    -fx-border-color: #e1bee7;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f3e5f5; /* Lavande très clair */
+    -fx-background-radius: 10px 10px 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #6a5acd;
+    -fx-font-weight: bold;
+}

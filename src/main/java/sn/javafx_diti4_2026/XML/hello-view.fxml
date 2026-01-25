@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sn.javafx_diti4_2026.controllers.HelloController"
+            style="-fx-font-family:'Comic Sans MS'; -fx-font-weight:bold; -fx-background-color:#FFC0CB;">
+
+    <left>
+        <VBox prefWidth="160" spacing="10">
+            <padding>
+                <Insets bottom="15" left="10" right="10" top="15"/>
+            </padding>
+            <Button text="Types d'assurance" prefWidth="140"
+                    onAction="#openTypeAssuranceWindow"
+                    style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-font-weight:bold; -fx-background-radius:20;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets bottom="15" left="15" right="15" top="10"/>
+            </padding>
+
+            <Text text="Gestion des Assurances"
+                  style="-fx-fill:black; -fx-font-weight:bold;">
+                <font>
+                    <Font size="22"/>
+                </font>
+            </Text>
+
+            <TextField fx:id="searchField" promptText="Rechercher..."
+                       style="-fx-background-radius:10; -fx-text-fill:black; -fx-font-weight:bold;"/>
+
+            <TableView fx:id="tab_assurance" prefHeight="400" prefWidth="600"
+                       style="-fx-background-color:#FFF0F5; -fx-background-radius:10;">
+                <columns>
+                    <TableColumn fx:id="id_tab" text="Id"/>
+                    <TableColumn fx:id="nom_tab" text="Nom Client"/>
+                    <TableColumn fx:id="numero_tab" text="Numéro"/>
+                    <TableColumn fx:id="montant_tab" text="Montant"/>
+                    <TableColumn fx:id="type_tab" text="Type"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button text="Ajouter" onAction="#openAddAssuranceWindow"
+                        style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-font-weight:bold; -fx-background-radius:20;"/>
+                <Button text="Modifier" onAction="#openEditAssuranceWindow"
+                        style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-font-weight:bold; -fx-background-radius:20;"/>
+                <Button text="Supprimer" onAction="#deleteAssurance"
+                        style="-fx-background-color:#D8BFD8; -fx-text-fill:black; -fx-font-weight:bold; -fx-background-radius:20;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>
+

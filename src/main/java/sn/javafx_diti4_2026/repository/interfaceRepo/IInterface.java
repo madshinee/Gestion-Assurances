@@ -1,6 +1,5 @@
 package sn.javafx_diti4_2026.repository.interfaceRepo;
 
-
 import java.util.List;
 
 public interface IInterface<T> {
