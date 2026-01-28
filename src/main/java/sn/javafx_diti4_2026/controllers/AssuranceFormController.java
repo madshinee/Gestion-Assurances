@@ -1,7 +1,6 @@
 package sn.javafx_diti4_2026.controllers;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -115,41 +114,24 @@ public class AssuranceFormController {
 
     @FXML
     void saveAssurance(ActionEvent event) {
-        try {
-            String typeLabel = typeAssurance.getValue();
-            String nom = nomClient.getText();
-            Double mnt = Double.parseDouble(montant.getText());
-            
-            if (typeLabel == null || typeLabel.trim().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Erreur", "Veuillez sélectionner un type d'assurance.");
-                return;
-            }
-
-            Assurance assuranceToSave = currentAssurance;
-
-            if (assuranceToSave == null) {
-                assuranceToSave = new Assurance();
-            }
-
-            assuranceToSave.setNomClient(nom);
-            assuranceToSave.setMontant(mnt);
-            
-            TypeAssurance selectedType = typeAssuranceRepository.findAll().stream()
+        Assurance assuranceToSave = (currentAssurance == null) ? new Assurance() : currentAssurance;
+        String typeLabel = typeAssurance.getValue();
+        TypeAssurance selectedType = typeAssuranceRepository.findAll().stream()
                 .filter(t -> t.getLabel().equals(typeLabel))
-                .findFirst().orElse(null);
-            assuranceToSave.setTypeAssurance(selectedType);
+                .findFirst()
+                .orElse(null);
 
-            if (currentAssurance != null) {
-                assuranceRepository.update(assuranceToSave);
-            } else {
-                assuranceRepository.insert(assuranceToSave);
-            }
+        assuranceToSave.setNomClient(nomClient.getText());
+        assuranceToSave.setMontant(Double.parseDouble(montant.getText()));
+        assuranceToSave.setTypeAssurance(selectedType);
 
-            helloController.printAllAssurance();
-            closeWindow();
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "Veuillez vérifier les champs numériques.");
+        if (currentAssurance == null) {
+            assuranceRepository.insert(assuranceToSave);
+        } else {
+            assuranceRepository.update(assuranceToSave);
         }
+        helloController.printAllAssurance();
+        closeWindow();
     }
 
     @FXML
@@ -160,13 +142,5 @@ public class AssuranceFormController {
     private void closeWindow() {
         Stage stage = (Stage) nomClient.getScene().getWindow();
         stage.close();
-    }
-
-    private void showAlert(Alert.AlertType alertType, String title, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 }
