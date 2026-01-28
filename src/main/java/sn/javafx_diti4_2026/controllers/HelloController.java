@@ -1,5 +1,6 @@
 package sn.javafx_diti4_2026.controllers;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,23 +39,35 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        assuranceRepository = new AssuranceRepository();
+        this.assuranceRepository = new AssuranceRepository();
+        printAllAssurance();
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.trim().isEmpty()) {
+                printAllAssurance(); 
+            } else {
+                searchAssurances(newValue);
+            }
+        });
+    }
+
+    public void printAllAssurance() {
+        ObservableList<Assurance> assurances = FXCollections.observableArrayList(assuranceRepository.findAll()); // recuperation db
+
+        // Configuration
         id_tab.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom_tab.setCellValueFactory(new PropertyValueFactory<>("nomClient"));
         numero_tab.setCellValueFactory(new PropertyValueFactory<>("numero"));
         montant_tab.setCellValueFactory(new PropertyValueFactory<>("montant"));
-        type_tab.setCellValueFactory(new PropertyValueFactory<>("typeAssurance"));
         
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            searchAssurances(newValue);
+        type_tab.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getTypeAssurance() != null) {
+                return new SimpleStringProperty(cellData.getValue().getTypeAssurance().getLabel());
+            } else {
+                return new SimpleStringProperty("");
+            }
         });
 
-        printAllAssurance();
-    }
-
-    public void printAllAssurance() {
-        List<Assurance> assuranceList = assuranceRepository.findAll();
-        ObservableList<Assurance> assurances = FXCollections.observableArrayList(assuranceList);
         tab_assurance.setItems(assurances);
     }
 
@@ -92,7 +105,7 @@ public class HelloController implements Initializable {
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
-            
+
             stage.setTitle(assurance == null ? "Ajouter une Assurance" : "Modifier une Assurance");
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -105,13 +118,9 @@ public class HelloController implements Initializable {
 
     @FXML
     void deleteAssurance(ActionEvent event) {
-        Assurance selectedAssurance = tab_assurance.getSelectionModel().getSelectedItem();
-        if (selectedAssurance != null) {
-            assuranceRepository.delete(selectedAssurance.getId());
-            printAllAssurance();
-        } else {
-            showAlert(Alert.AlertType.WARNING, "Aucune sélection", "Veuillez sélectionner une assurance à supprimer.");
-        }
+        int id = tab_assurance.getSelectionModel().getSelectedItem().getId();
+        assuranceRepository.delete(id);
+        printAllAssurance();
     }
 
     @FXML
@@ -119,7 +128,7 @@ public class HelloController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("XML/type-assurance-view.fxml"));
             Parent root = loader.load();
-            
+
             Stage stage = new Stage();
             Scene scene = new Scene(root);
 
@@ -129,7 +138,7 @@ public class HelloController implements Initializable {
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir la fenêtre de gestion des types.");
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible d'ouvrir la fenêtre.");
         }
     }
 
